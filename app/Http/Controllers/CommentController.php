@@ -21,9 +21,11 @@ class CommentController extends Controller
             'home_page' => 'nullable|url',
             'captcha' => 'required|captcha',
             'text' => 'required|string',
+            'parent_id' => 'nullable|integer|exists:comments,id'
         ]);
     
         $comment = Comment::create($request->all());
         return response()->json($comment);
     }
+    
 }
