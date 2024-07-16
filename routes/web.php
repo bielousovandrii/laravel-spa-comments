@@ -17,3 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/captcha', ['App\Http\Controllers\CaptchaController::class', 'getCaptcha']);
