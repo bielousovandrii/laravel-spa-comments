@@ -6,6 +6,7 @@
 
 import './bootstrap';
 import { createApp } from 'vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -13,22 +14,29 @@ import { createApp } from 'vue';
  * to use in your application's views. An example is included for you.
  */
 
+import CommentList from './components/CommentList.vue';
+import CommentForm from './components/CommentForm.vue';
+
+// Define your routes
+const routes = [
+    { path: '/', component: CommentList }
+];
+
+// Create the router instance and pass the `routes` option
+const router = createRouter({
+    history: createWebHistory(),
+    routes
+});
+
+// Create the Vue app instance
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+// Register components
+app.component('comment-list', CommentList);
+app.component('comment-form', CommentForm);
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, definition]) => {
-//     app.component(path.split('/').pop().replace(/\.\w+$/, ''), definition.default);
-// });
+// Use the router
+app.use(router);
 
 /**
  * Finally, we will attach the application instance to a HTML element with

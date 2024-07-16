@@ -18,7 +18,7 @@
     </head>
     <body>
     <div id="app">
-    <example-component></example-component>
+        <router-view></router-view>
     </div>
     </body>
 </html>
