@@ -55,4 +55,8 @@ class RegisterController extends Controller
 
         return response()->json(['message' => 'Registration successful!'], 201);
     }
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
 }
