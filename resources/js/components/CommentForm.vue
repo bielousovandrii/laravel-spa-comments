@@ -28,7 +28,7 @@ export default {
             captchaImage: ''
         };
     },
-    mounted() {
+    created() {
         this.refreshCaptcha();
     },
     methods: {
