@@ -4,22 +4,25 @@
         <comment-form @commentAdded="addComment"></comment-form>
 
         <!-- Comment List Table -->
-        <table>
+        <table class="table-auto w-full">
             <thead>
             <tr>
-                <th @click="sortBy('user_name')">User Name</th>
-                <th @click="sortBy('email')">Email</th>
-                <th @click="sortBy('created_at')">Date</th>
+                <th @click="sortBy('user_name')" class="cursor-pointer px-4 py-2">User Name</th>
+                <th @click="sortBy('email')" class="cursor-pointer px-4 py-2">Email</th>
+                <th @click="sortBy('created_at')" class="cursor-pointer px-4 py-2">Date</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="comment in comments" :key="comment.id">
-                <td>{{ comment.user_name }}</td>
-                <td>{{ comment.email }}</td>
-                <td>{{ comment.created_at }}</td>
-                <td>
+                <td class="border px-4 py-2">{{ comment.user_name }}</td>
+                <td class="border px-4 py-2">{{ comment.email }}</td>
+                <td class="border px-4 py-2">{{ comment.created_at }}</td>
+                <td class="border px-4 py-2">
                     <!-- Lazy load replies only when expanded -->
-                    <button @click="toggleReplies(comment.id)">Toggle Replies</button>
+                    <button @click="toggleReplies(comment.id)"
+                            class="text-blue-500 hover:text-blue-700 focus:outline-none">
+                        Toggle Replies
+                    </button>
                     <comment-list v-if="comment.showReplies && comment.replies" :comments="comment.replies"></comment-list>
                 </td>
             </tr>
