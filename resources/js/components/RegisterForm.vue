@@ -1,31 +1,48 @@
 <template>
-    <div>
-        <form @submit.prevent="register">
-            <div>
-                <label for="first_name">First Name</label>
-                <input type="text" v-model="form.first_name" required>
+    <nav class="navbar">
+        <router-link to="/">Comments</router-link>
+        <router-link to="/register">Register</router-link>
+        <router-link to="/login">Login</router-link>
+    </nav>
+    <div class="max-w-md mx-auto mt-8">
+        <h2 class="text-2xl font-bold mb-4">Register</h2>
+        <form @submit.prevent="register" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+                <input type="text" v-model="form.first_name" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            <div>
-                <label for="last_name">Last Name</label>
-                <input type="text" v-model="form.last_name" required>
+            <div class="mb-4">
+                <label for="last_name" class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+                <input type="text" v-model="form.last_name" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            <div>
-                <label for="email">Email</label>
-                <input type="email" v-model="form.email" required>
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input type="email" v-model="form.email" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            <div>
-                <label for="password">Password</label>
-                <input type="password" v-model="form.password" required>
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                <input type="password" v-model="form.password" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            <div>
-                <label for="password_confirmation">Confirm Password</label>
-                <input type="password" v-model="form.password_confirmation" required>
+            <div class="mb-6">
+                <label for="password_confirmation" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
+                <input type="password" v-model="form.password_confirmation" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            <div>
-                <label for="photo">Photo</label>
-                <input type="file" @change="handleFileUpload">
+            <div class="mb-4">
+                <label for="photo" class="block text-gray-700 text-sm font-bold mb-2">Photo</label>
+                <input type="file" @change="handleFileUpload"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-            <button type="submit">Register</button>
+            <div class="flex items-center justify-between">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Register
+                </button>
+            </div>
         </form>
     </div>
 </template>
