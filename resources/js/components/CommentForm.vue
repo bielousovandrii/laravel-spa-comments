@@ -1,4 +1,9 @@
 <template>
+    <nav>
+        <router-link to="/">Comments</router-link>
+        <router-link to="/register">Register</router-link>
+        <router-link to="/login">Login</router-link>
+    </nav>
     <form @submit.prevent="submitComment">
         <input v-model="form.user_name" placeholder="User Name" required />
         <input v-model="form.email" placeholder="Email" type="email" required />
