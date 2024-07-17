@@ -1,0 +1,37 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #0f172a;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #f39c12;
+}
+
+.nav-link.active {
+    color: #f39c12;
+    font-weight: bold;
+}
+a{
+    color:#FFFFFF !important;
+}
+body{
+        --tw-bg-opacity: 1;
+        background-color: rgb(15 23 42/var(--tw-bg-opacity));
+}
+th.cursor-pointer.px-4.py-2 {
+    color: white;
+}
+h2.text-2xl.font-bold.mb-4 {
+    color: white;
+}
