@@ -43,4 +43,7 @@ class LoginController extends Controller
 
         return response()->json(['message' => 'Logged out successfully!'], 200);
     }
+    public function showLoginForm(Request $request){
+        return view('auth.login');
+    }
 }
