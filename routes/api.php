@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CaptchaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('comments', [CommentController::class, 'index']);
 Route::post('comments', [CommentController::class, 'store']);
+Route::get('captcha', [CaptchaController::class, 'getCaptcha']);
