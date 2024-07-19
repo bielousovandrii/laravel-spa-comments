@@ -8,6 +8,11 @@
         <h2 class="text-2xl font-bold mb-4">Register</h2>
         <form @submit.prevent="register" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
+                <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                <input type="text" v-model="form.name" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
                 <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
                 <input type="text" v-model="form.first_name" required
                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -54,6 +59,7 @@ export default {
     data() {
         return {
             form: {
+                name: '',
                 first_name: '',
                 last_name: '',
                 email: '',
@@ -69,6 +75,7 @@ export default {
         },
         async register() {
             let formData = new FormData();
+            formData.append('name', this.form.name);
             formData.append('first_name', this.form.first_name);
             formData.append('last_name', this.form.last_name);
             formData.append('email', this.form.email);
