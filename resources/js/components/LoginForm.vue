@@ -29,6 +29,8 @@
 <script>
 import axios from 'axios';
 
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 export default {
     data() {
         return {
@@ -42,9 +44,17 @@ export default {
     methods: {
         async login() {
             try {
-                await axios.post('/login', this.form);
+                const response = await axios.post('/login', this.form, {
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                });
+
+                // Сохранение токена в localStorage
+                localStorage.setItem('auth_token', response.data.access_token);
+
                 alert('Login successful!');
-                // Redirect to another page or refresh
+                // Перенаправление на другую страницу или обновление
                 this.$router.push('/');
             } catch (error) {
                 if (error.response && error.response.data.errors) {
