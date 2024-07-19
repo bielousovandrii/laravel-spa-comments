@@ -19,6 +19,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -35,8 +36,10 @@ class RegisterController extends Controller
         }
 
         return User::create([
+            'username' => $data['name'],
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'photo' => $path,
@@ -53,8 +56,15 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($data)));
 
-        return response()->json(['message' => 'Registration successful!'], 201);
+        // Generate the Sanctum token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Registration successful!',
+            'token' => $token,
+        ], 201);
     }
+
     public function showRegistrationForm()
     {
         return view('auth.register');
