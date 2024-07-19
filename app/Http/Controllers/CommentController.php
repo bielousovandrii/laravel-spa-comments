@@ -15,10 +15,24 @@ class CommentController extends Controller
     {
         return view('welcome');
     }
-    public function index()
+    public function index(Request $request)
     {
-        $comments = Comment::whereNull('parent_id')->with('replies')->paginate(25);
-        return response()->json($comments);
+        $sortBy = $request->query('sortBy', 'created_at');
+        $order = $request->query('order', 'desc'); // 'desc' для LIFO
+
+        $comments = Comment::with('replies') // Или любой другой метод для получения комментариев
+        ->orderBy($sortBy, $order)
+            ->paginate(10); // Пагинация, если требуется
+
+        return response()->json([
+            'data' => $comments->items(),
+            'meta' => [
+                'current_page' => $comments->currentPage(),
+                'last_page' => $comments->lastPage(),
+                'per_page' => $comments->perPage(),
+                'total' => $comments->total(),
+            ],
+        ]);
     }
 
     public function store(Request $request)
