@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentController;
+use App\Events\MessageSent;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,5 +27,12 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth.redirect');
+
+Route::get('/send-message', function () {
+    $message = 'This is a test message';
+    broadcast(new MessageSent($message))->toOthers();
+
+    return 'Message sent!';
+});
 
 Auth::routes();
