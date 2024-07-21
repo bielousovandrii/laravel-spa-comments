@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use App\Events\CommentCreated;
+
 class CommentController extends Controller
 {
     public function __construct()
@@ -39,7 +41,7 @@ class CommentController extends Controller
     {
         $request->validate([
             'home_page' => 'nullable|url',
-            'captcha' => 'required|string',
+//            'captcha' => 'required|string',
             'text' => 'required|string',
             'parent_id' => 'nullable|integer|exists:comments,id'
         ]);
@@ -54,6 +56,7 @@ class CommentController extends Controller
             'parent_id' => $request->parent_id,
             'user_id' => $user->id,
         ]);
+        broadcast(new CommentCreated($comment))->toOthers();
         return response()->json($comment);
     }
     public function storeReply(Request $request, Comment $comment)

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Elasticsearch\ClientBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -36,4 +37,31 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
+//    protected static function boot()
+//    {
+//        parent::boot();
+//
+//        static::saved(function ($comment) {
+//            $client = ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
+//
+//            $params = [
+//                'index' => 'comments',
+//                'id' => $comment->id,
+//                'body' => $comment->toArray(),
+//            ];
+//
+//            $client->index($params);
+//        });
+//
+//        static::deleted(function ($comment) {
+//            $client = ClientBuilder::create()->setHosts([env('ELASTICSEARCH_HOST')])->build();
+//
+//            $params = [
+//                'index' => 'comments',
+//                'id' => $comment->id,
+//            ];
+//
+//            $client->delete($params);
+//        });
+//    }
 }
