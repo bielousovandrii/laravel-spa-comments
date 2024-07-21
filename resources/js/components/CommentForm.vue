@@ -5,6 +5,9 @@
 <!--        <router-link to="/register">Register</router-link>-->
 <!--        <router-link to="/login">Login</router-link>-->
 <!--    </nav>-->
+    <li v-for="message in messages">
+        {{message}}
+    </li>
     <section class="py-8 lg:py-16 antialiased">
         <div class="max-w-2xl mx-auto px-4">
             <div class="flex justify-between items-center mb-6">
@@ -35,6 +38,7 @@
 
 <script>
 import axios from 'axios';
+import DOMPurify from 'dompurify';
 
 export default {
     data() {
@@ -46,7 +50,8 @@ export default {
             },
             captchaImage: '',
             rawText: '',
-            sanitizedText: ''
+            sanitizedText: '',
+            comments: [] // Инициализируйте comments как пустой массив
         };
     },
     created() {
@@ -72,14 +77,29 @@ export default {
                 console.error('Error fetching captcha:', error);
             });
         },
-        submitComment() {
-            axios.post('/api/comments', this.form).then(response => {
-                this.$emit('commentAdded', response.data);
+        addComment(comment) {
+            if (!Array.isArray(this.comments)) {
+                this.comments = [];
+            }
+            this.comments.unshift(comment); // Добавляем новый комментарий в начало списка
+            if (this.comments.length > 25) {
+                this.comments.pop(); // Удаляем последний комментарий, если их больше 25
+            }
+        },
+        async submitComment() {
+            try {
+                const response = await axios.post('/api/comments', {
+                    user_name: this.form.user_name,
+                    email: this.form.email,
+                    home_page: this.form.home_page,
+                    text: this.form.text
+                });
+
+                this.addComment(response.data); // Добавление нового комментария в массив comments
                 this.resetForm();
-                this.refreshCaptcha();
-            }).catch(error => {
+            } catch (error) {
                 console.error('Error submitting comment:', error);
-            });
+            }
         },
         resetForm() {
             this.form = {
@@ -102,6 +122,7 @@ export default {
     }
 };
 </script>
+
 <style>
 .text-white {
     background: #123e9d;
