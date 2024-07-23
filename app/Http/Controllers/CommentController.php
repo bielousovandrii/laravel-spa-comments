@@ -22,7 +22,7 @@ class CommentController extends Controller
         $sortBy = $request->query('sortBy', 'created_at');
         $order = $request->query('order', 'desc'); // 'desc' для LIFO
 
-        $comments = Comment::with('replies') // Или любой другой метод для получения комментариев
+        $comments = Comment::with(['replies.user', 'user']) // Загрузить пользователя для комментариев и их ответов
         ->orderBy($sortBy, $order)
             ->paginate(10); // Пагинация, если требуется
 
@@ -36,6 +36,8 @@ class CommentController extends Controller
             ],
         ]);
     }
+
+
 
     public function store(Request $request)
     {
