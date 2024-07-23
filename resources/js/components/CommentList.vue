@@ -21,7 +21,7 @@
                 <p class="text-gray-500 dark:text-gray-400" v-html="sanitizeInput(comment.text)"></p>
                 <div v-for="reply in comment.replies" :key="reply.id" class="p-6 mb-3 ml-6 lg:ml-12 text-base rounded-lg ">
                     <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                        <img class="mr-2 w-6 h-6 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" :alt="comment.user_name">
+                        <img class="mr-2 w-6 h-6 rounded-full" :src="getPhotoUrl(comment.user.photo)" alt="User Photo" />
                         {{ reply.user_name }}
                     </p>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
