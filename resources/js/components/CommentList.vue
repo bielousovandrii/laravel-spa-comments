@@ -10,7 +10,7 @@
                 <footer class="flex justify-between items-center mb-2">
                     <div class="flex items-center">
                         <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
-                            <img class="mr-2 w-6 h-6 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" :alt="comment.user_name">
+                            <img class="mr-2 w-6 h-6 rounded-full" :src="getPhotoUrl(comment.user.photo)" alt="User Photo" />
                             {{ comment.user_name }}
                         </p>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
@@ -133,7 +133,8 @@ export default {
                         user_name: '',
                         email: '',
                         home_page: '',
-                        text: ''
+                        text: '',
+                        photo: ''
                     },
                     replies: comment.replies || [] // Ensure replies are initialized
                 })) || [];
@@ -144,7 +145,11 @@ export default {
                 this.fetching = false; // Reset state after the request completes
             }
         },
-
+        getPhotoUrl(photoPath) {
+            // Здесь нужно указать базовый URL, где хранятся фотографии пользователей
+            const baseURL = "http://127.0.0.1:8000/storage/";
+            return baseURL + photoPath;
+        },
         toggleReplies(commentId) {
             const comment = this.comments.find(c => c.id === commentId);
             if (comment) {
@@ -219,15 +224,18 @@ export default {
                 const comment = {
                     id: data.id,
                     user_name: data.user_name,
+                    photo: data.photo,
                     email: data.email,
                     home_page: data.home_page,
                     text: data.text,
+                    user: data.user,
                     parent_id: data.parent_id,
                     created_at: data.created_at,
                     replies: data.replies || [], // Initialize replies if not present
                     showReplies: false, // Add a flag to manage replies visibility
                     replyForm: {
                         user_name: '',
+                        photo: '',
                         email: '',
                         home_page: '',
                         text: ''
@@ -249,6 +257,7 @@ export default {
             try {
                 const response = await axios.post('/api/comments', {
                     user_name: comment.replyForm.user_name,
+                    photo: comment.replyForm.photo,
                     email: comment.replyForm.email,
                     home_page: comment.replyForm.home_page,
                     text: comment.replyForm.text,
@@ -264,6 +273,7 @@ export default {
                 // Clear the reply form
                 comment.replyForm = {
                     user_name: '',
+                    photo: '',
                     email: '',
                     home_page: '',
                     text: ''
