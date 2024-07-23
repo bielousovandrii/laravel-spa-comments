@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 //use Elasticsearch\ClientBuilder;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Comment extends Model
 {
@@ -16,6 +17,8 @@ class Comment extends Model
         'home_page',
         'text',
         'parent_id',
+        'photo',
+        'user_id'
     ];
 
     /**
@@ -35,7 +38,7 @@ class Comment extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 //    protected static function boot()
 //    {
