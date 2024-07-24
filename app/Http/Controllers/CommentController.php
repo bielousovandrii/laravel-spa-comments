@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use App\Events\CommentCreated;
-use Mews\Captcha\Facades\Captcha;
+use App\Jobs\SendCommentToQueue;
 
 class CommentController extends Controller
 {
@@ -69,6 +69,7 @@ class CommentController extends Controller
             'parent_id' => $request->parent_id,
             'user_id' => $user->id,
         ]);
+        SendCommentToQueue::dispatch($comment);
         broadcast(new CommentCreated($comment))->toOthers();
         return response()->json($comment);
     }
