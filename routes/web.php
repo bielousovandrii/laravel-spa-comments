@@ -5,7 +5,6 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentController;
 use App\Events\MessageSent;
-use App\Http\Controllers\CaptchaServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,25 +29,5 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth.redirect');
 
-Route::get('/send-message', function () {
-    $message = 'This is a test message';
-    broadcast(new MessageSent($message))->toOthers();
-
-    return 'Message sent!';
-});
-Route::get('/test-captcha', function () {
-    return [
-        'captcha_src' => Captcha::src(),
-        'captcha_status' => Captcha::check('test-captcha-value') ? 'valid' : 'invalid'
-    ];
-});
-
-Route::get('/captcha/{config}', function ($config) {
-    return Captcha::create($config);
-});
-
-Route::get('/contact-form', [CaptchaServiceController::class, 'index']);
-Route::post('/captcha-validation', [CaptchaServiceController::class, 'capthcaFormValidate']);
-Route::get('/reload-captcha', [CaptchaServiceController::class, 'reloadCaptcha']);
 
 Auth::routes();
