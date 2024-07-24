@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use App\Events\CommentCreated;
+use Mews\Captcha\Facades\Captcha;
 
 class CommentController extends Controller
 {
@@ -41,12 +42,22 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
+        $rules = ['captcha' => 'required|captcha_api:'. request('key') . ',math'];
+        $validator = validator()->make(request()->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'invalid captcha',
+            ]);
+        }
+
         $request->validate([
             'home_page' => 'nullable|url',
-//            'captcha' => 'required|string',
+            'captcha' => 'required',
             'text' => 'required|string',
             'parent_id' => 'nullable|integer|exists:comments,id'
         ]);
+
+
         $user = Auth::user();
 
         $comment = Comment::create([

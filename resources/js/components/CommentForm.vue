@@ -19,6 +19,7 @@
             </div>
             <div class="mb-4 flex items-center">
                 <img :src="captchaImage" @click="refreshCaptcha" class="cursor-pointer">
+                <input type="hidden" v-model="form.key">
                 <input v-model="form.captcha" placeholder="CAPTCHA" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" required />
             </div>
             <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200  dark:border-gray-700">
@@ -46,9 +47,11 @@ export default {
             form: {
                 home_page: '',
                 captcha: '',
-                text: ''
+                text: '',
+                key: '',
             },
             captchaImage: '',
+
             rawText: '',
             sanitizedText: '',
             comments: [] // Инициализируйте comments как пустой массив
@@ -71,8 +74,10 @@ export default {
             }
         },
         refreshCaptcha() {
-            axios.get('/api/captcha').then(response => {
-                this.captchaImage = response.data.captcha_src;
+            axios.get('/captcha/api/math').then(response => {
+                this.captchaImage = response.data.img;
+                this.form.key = response.data.key;
+                console.log(key);
             }).catch(error => {
                 console.error('Error fetching captcha:', error);
             });
@@ -92,11 +97,14 @@ export default {
                     user_name: this.form.user_name,
                     email: this.form.email,
                     home_page: this.form.home_page,
-                    text: this.form.text
+                    text: this.form.text,
+                    captcha: this.form.captcha,
+                    key: this.form.key,
                 });
 
                 this.addComment(response.data); // Добавление нового комментария в массив comments
                 this.resetForm();
+                this.refreshCaptcha();
             } catch (error) {
                 console.error('Error submitting comment:', error);
             }
