@@ -26,9 +26,7 @@ Requirements
 # Installation
 1. Clone the Repository
 ```
-bash
 git clone https://github.com/bielousovandrii/laravel-spa-comments.git
-cd laravel-spa-comments
 ```
 2. Set Up Environment
 # Copy the .env.example file to .env and update the environment variables as needed:
