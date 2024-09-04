@@ -27,7 +27,7 @@ Requirements
 1. Clone the Repository
 ```
 bash
-git clone https://github.com/yourusername/laravel-spa-comments.git
+git clone https://github.com/bielousovandrii/laravel-spa-comments.git
 cd laravel-spa-comments
 ```
 2. Set Up Environment
